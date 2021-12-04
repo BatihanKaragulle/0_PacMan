@@ -5,8 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 
-    float speed = 30;
-
+    float speed = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -15,10 +14,25 @@ public class Movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   public void Update()
     {
-        float steerAmount = Input.GetAxis("Horizontal")*speed*Time.deltaTime;
-        float moveAmount = Input.GetAxis("Vertical")*speed*Time.deltaTime;
-        transform.Translate(moveAmount,0,steerAmount);
+       
+
+    }
+
+    void FixedUpdate() 
+    {
+        float inputX = Input.GetAxis("Horizontal");
+        float inputY = Input.GetAxis("Vertical");
+
+        float xmovement = inputX * speed;
+        float ymovement = inputY * speed;
+
+        Vector2 movement= new Vector2(xmovement, ymovement);
+
+        movement *= Time.deltaTime;
+
+         transform.Translate(movement);
+
     }
 }
