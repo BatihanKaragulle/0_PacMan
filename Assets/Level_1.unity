@@ -3887,6 +3887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0bf6ee196ef48949472ae4cc02b202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myfood: {fileID: 1813235516}
 --- !u!50 &1258262108
 Rigidbody2D:
   serializedVersion: 4
@@ -4090,6 +4091,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1813235516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c51812c77e2e4cef94d070f33de88be, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d5b3c1f3d628491dac2302f90bfd77d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -6,18 +6,24 @@ public class Movement : MonoBehaviour
 {
 
     float speed = 10;
+   
+    public GameObject myfood;
 
+    
     // Start is called before the first frame update
-    void Start()
+   void Start()
     {
+       
+
         
     }
 
     // Update is called once per frame
    public void Update()
     {
-       
-
+        bool alp = myfood.GetComponent<Food>().emreninannesi();
+        
+        Debug.Log(alp);
     }
 
     void FixedUpdate() 
@@ -33,6 +39,6 @@ public class Movement : MonoBehaviour
         movement *= Time.deltaTime;
 
          transform.Translate(movement);
-
+        
     }
 }
