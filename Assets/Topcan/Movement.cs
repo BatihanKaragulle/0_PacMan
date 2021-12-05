@@ -9,22 +9,34 @@ public class Movement : MonoBehaviour
    
     public GameObject myfood;
 
+    int can = 4;
+
     
     // Start is called before the first frame update
    void Start()
     {
-       
-
-        
+        Debug.Log(can);
     }
 
     // Update is called once per frame
    public void Update()
     {
-        bool alp = myfood.GetComponent<Food>().emreninannesi();
-        
-        Debug.Log(alp);
+        if(myfood!=null){
+            bool isActive  = myfood.GetComponent<Food>().getActive();
+        }
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("food") && myfood != null){
+            bool isActive  = myfood.GetComponent<Food>().getActive();
+            if(isActive)
+                CanInc();
+        }
+        else if(other.CompareTag("enemy")){
+            CanDec();
+        }
+    }
+
 
     void FixedUpdate() 
     {
@@ -38,7 +50,17 @@ public class Movement : MonoBehaviour
 
         movement *= Time.deltaTime;
 
-         transform.Translate(movement);
-        
+         transform.Translate(movement); 
+    }
+
+    public void CanInc()
+    {
+        can++;
+        Debug.Log(can);
+    }
+    public void CanDec()
+    {
+        can--;
+        Debug.Log(can);
     }
 }

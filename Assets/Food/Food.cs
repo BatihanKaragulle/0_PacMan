@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
-    bool Emre = true;
+    bool active = true;
 
-    public bool emreninannesi()
+    public bool getActive()
     {
-        return Emre;
+        return active;
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
         Debug.Log("I ate food!");
 
-        Emre = false;
+        active = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class Food : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!emreninannesi())
+        if(!getActive())
         {
             Destroy(this.gameObject);
         }
