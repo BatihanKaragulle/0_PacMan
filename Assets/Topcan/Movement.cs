@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     float speed = 10;
     public GameObject myfood;
-    public int can;
+    public int can = 4;
     public int getcanvalue()
     {
         return can;
@@ -21,6 +21,9 @@ public class Movement : MonoBehaviour
     {
         if(myfood!=null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
+        }
+        if(can < 0){
+            Destroy(this.gameObject);
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {
