@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-
     float speed = 10;
-   
     public GameObject myfood;
-
-    int can = 4;
-
-    
+    public int can;
+    public int getcanvalue()
+    {
+        return can;
+    }
     // Start is called before the first frame update
    void Start()
     {
         Debug.Log(can);
     }
-
-    // Update is called once per frame
+   // Update is called once per frame
    public void Update()
     {
         if(myfood!=null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
         }
     }
-
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("food") && myfood != null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
@@ -36,8 +33,6 @@ public class Movement : MonoBehaviour
             CanDec();
         }
     }
-
-
     void FixedUpdate() 
     {
         float inputX = Input.GetAxis("Horizontal");
