@@ -11,16 +11,18 @@ public class Health : MonoBehaviour
     public Sprite fullheart;
     public Sprite emptyheart;
 
+
+    int HealthPoints = 4;
+
     void Update() 
     {
-        int HealthPoints = Can.GetComponent<Movement>().getcanvalue();
+        HealthPoints = Can.GetComponent<Movement>().getcanvalue();
 
-        if (HealthPoints > numberofhearts)
+        /*if (HealthPoints > numberofhearts)
         {
             HealthPoints = numberofhearts;
-        }
-
-        for (int i = 0; i < hearts.Length; i++) 
+        }*/
+        for (int i = 0 ; i < hearts.Length; i++) 
         {
             if (i < HealthPoints)
             {
@@ -39,7 +41,8 @@ public class Health : MonoBehaviour
                 hearts[i].enabled = false;
             }
         }
-         
     }
-
+    public int getHealthPoints(){
+        return HealthPoints;
+    }
 }

@@ -4382,6 +4382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myfood: {fileID: 1813235516}
   can: 4
+  Hearths: {fileID: 1258262111}
 --- !u!50 &1258262108
 Rigidbody2D:
   serializedVersion: 4

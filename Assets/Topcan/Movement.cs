@@ -7,6 +7,10 @@ public class Movement : MonoBehaviour
     float speed = 10;
     public GameObject myfood;
     public int can = 4;
+
+    int KalpSayisi;
+
+    public GameObject KalpTutucagi;
     public int getcanvalue()
     {
         return can;
@@ -19,10 +23,11 @@ public class Movement : MonoBehaviour
    // Update is called once per frame
    public void Update()
     {
+        KalpSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();
         if(myfood!=null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
         }
-        if(can < 0){
+        if(KalpSayisi <= 0){
             Destroy(this.gameObject);
         }
     }

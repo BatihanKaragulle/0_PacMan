@@ -9,6 +9,9 @@ public class CameraBehavior : MonoBehaviour
 
     private void Update() 
     {
-        transform.position = new Vector3(playerPos.position.x, playerPos.position.y,-1);
+        if(playerPos!=null)
+        {
+            transform.position = new Vector3(playerPos.position.x, playerPos.position.y,-1);
+        }
     }
 }
