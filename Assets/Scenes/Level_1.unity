@@ -4382,7 +4382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myfood: {fileID: 1813235516}
   can: 4
-  Hearths: {fileID: 1258262111}
+  KalpTutucagi: {fileID: 1258262104}
 --- !u!50 &1258262108
 Rigidbody2D:
   serializedVersion: 4
@@ -4584,6 +4584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5b3c1f3d628491dac2302f90bfd77d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1258262107}
 --- !u!1 &1925701791
 GameObject:
   m_ObjectHideFlags: 0

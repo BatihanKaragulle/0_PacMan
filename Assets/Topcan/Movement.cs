@@ -8,7 +8,11 @@ public class Movement : MonoBehaviour
     public GameObject myfood;
     public int can = 4;
 
-    int KalpSayisi;
+    int max_can = 4;
+
+    int KalpSpriteSayisi;
+
+
 
     public GameObject KalpTutucagi;
     public int getcanvalue()
@@ -23,11 +27,14 @@ public class Movement : MonoBehaviour
    // Update is called once per frame
    public void Update()
     {
-        KalpSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();
+        KalpSpriteSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();
         if(myfood!=null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
         }
-        if(KalpSayisi <= 0){
+        if(can > max_can){
+            can = max_can;
+        }
+        if(KalpSpriteSayisi <= 0){
             Destroy(this.gameObject);
         }
     }
@@ -59,11 +66,9 @@ public class Movement : MonoBehaviour
     public void CanInc()
     {
         can++;
-        Debug.Log(can);
     }
     public void CanDec()
     {
         can--;
-        Debug.Log(can);
     }
 }
