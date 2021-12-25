@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    float speed = 10;
+    //movement icin declare edilen
+    float speed = 5f;
+    public Transform movePoint;
+    public LayerMask whatStopsMovement;
+
+    //cani icin declare edilen attributlar
     public GameObject myfood;
     public int can = 4;
-
     int max_can = 4;
-
     int KalpSpriteSayisi;
-
-
-
     public GameObject KalpTutucagi;
     public int getcanvalue()
     {
@@ -22,12 +22,35 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
    void Start()
     {
-        Debug.Log(can);
+        movePoint.parent = null;
     }
-   // Update is called once per frame
-   public void Update()
+    void FixedUpdate() 
     {
-        KalpSpriteSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();
+        
+    }
+    // Update is called once per frame
+       public void Update()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        if(Vector3.Distance(transform.position, movePoint.position)== 0f)
+        {
+            if(Mathf.Abs(Input.GetAxisRaw("Horizontal"))==1f)
+            {
+                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal")+0.25f,0f,0f), .5f, whatStopsMovement))
+                    movePoint.position = movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f);              
+            }
+
+
+            if(Mathf.Abs(Input.GetAxisRaw("Vertical"))==1f)
+            {
+                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical")+0.25f,0f), .2f, whatStopsMovement))
+                    movePoint.position = movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f);
+            }
+        }
+
+
+
+        KalpSpriteSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();//Healthden kalp sayısını alıyo. 
         if(myfood!=null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
         }
@@ -47,20 +70,6 @@ public class Movement : MonoBehaviour
         else if(other.CompareTag("enemy")){
             CanDec();
         }
-    }
-    void FixedUpdate() 
-    {
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
-
-        float xmovement = inputX * speed;
-        float ymovement = inputY * speed;
-
-        Vector2 movement= new Vector2(xmovement, ymovement);
-
-        movement *= Time.deltaTime;
-
-         transform.Translate(movement); 
     }
 
     public void CanInc()

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 63578751}
   - component: {fileID: 63578750}
   - component: {fileID: 63578749}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 63578747}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 631113742}
   m_RootOrder: 0
@@ -3833,7 +3833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b265b66526b5ec04f9f2d0935f9b4c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPos: {fileID: 1258262106}
+  playerPos: {fileID: 0}
 --- !u!1 &309095684
 GameObject:
   m_ObjectHideFlags: 0
@@ -3845,6 +3845,7 @@ GameObject:
   - component: {fileID: 309095687}
   - component: {fileID: 309095686}
   - component: {fileID: 309095685}
+  - component: {fileID: 309095688}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: enemy
@@ -3937,12 +3938,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309095684}
   m_LocalRotation: {x: 0.01635882, y: -0, z: -0, w: 0.9998662}
-  m_LocalPosition: {x: 4.29, y: 1.99, z: 0}
+  m_LocalPosition: {x: 4.47, y: 1.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 1.875, y: 0, z: 0}
+--- !u!114 &309095688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309095684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d50bd52fdb26842ba7080f3bb9d598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &536536408
 GameObject:
   m_ObjectHideFlags: 0
@@ -4118,7 +4131,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631113740}
   m_Enabled: 1
-  m_CellSize: {x: 1.28, y: 1.28, z: 0}
+  m_CellSize: {x: 1.25, y: 1.25, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -4167,6 +4180,36 @@ Transform:
   - {fileID: 2091837319}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &805701622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 805701623}
+  m_Layer: 0
+  m_Name: Player Move Point
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &805701623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805701622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1258262106}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973368863
 GameObject:
@@ -4362,9 +4405,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258262104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.61, y: 0.54, z: 0}
+  m_LocalPosition: {x: -0.665, y: 0.645, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 805701623}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4380,6 +4424,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0bf6ee196ef48949472ae4cc02b202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movePoint: {fileID: 805701623}
+  whatStopsMovement:
+    serializedVersion: 2
+    m_Bits: 64
   myfood: {fileID: 1813235516}
   can: 4
   KalpTutucagi: {fileID: 1258262104}
