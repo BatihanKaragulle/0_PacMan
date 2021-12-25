@@ -36,14 +36,14 @@ public class Movement : MonoBehaviour
         {
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal"))==1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal")+0.25f,0f,0f), .5f, whatStopsMovement))
+                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f), .1f, whatStopsMovement))
                     movePoint.position = movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f);              
             }
 
 
             if(Mathf.Abs(Input.GetAxisRaw("Vertical"))==1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical")+0.25f,0f), .2f, whatStopsMovement))
+                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f), .1f, whatStopsMovement))
                     movePoint.position = movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f);
             }
         }
