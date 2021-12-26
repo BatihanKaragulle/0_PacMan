@@ -6,6 +6,7 @@ TagManager:
   tags:
   - food
   - enemy
+  - turnpoint
   layers:
   - Default
   - TransparentFX

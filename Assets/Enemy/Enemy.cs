@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         movePoint.parent = null;
+        directionTry = new Vector3 (1f,0f,0f);
     }
 
     // Update is called once per frame
@@ -21,7 +22,6 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
         if(Vector3.Distance(transform.position, movePoint.position)==0f)
         {
-            directionTry = GetRondomDir();
             if(Mathf.Abs(directionTry[0])==1)
             {
                 if(!Physics2D.OverlapCircle(movePoint.position + directionTry, .1f, whatStopsMovement))
@@ -44,8 +44,13 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.IsTouchingLayers(10)){
-            Debug.Log("blah");
+        if (other.gameObject.tag == "turnpoint")
+        {
+            while (!Physics2D.OverlapCircle(movePoint.position + directionTry, .1f, whatStopsMovement)||!Physics2D.OverlapCircle(movePoint.position + directionTry, .1f, whatStopsMovement))
+            {
+                directionTry = GetRondomDir();
+            }
+            
         }
     }
 }

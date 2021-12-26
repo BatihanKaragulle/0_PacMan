@@ -71,8 +71,8 @@ public class Movement : MonoBehaviour
         else if(other.CompareTag("enemy")){
             CanDec();
         }
+        
     }
-
     public void CanInc()
     {
         can++;
