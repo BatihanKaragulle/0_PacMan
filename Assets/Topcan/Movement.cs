@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey.Utils;
 
 public class Movement : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class Movement : MonoBehaviour
         
     }
     // Update is called once per frame
-       public void Update()
+    public void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
         if(Vector3.Distance(transform.position, movePoint.position)== 0f)

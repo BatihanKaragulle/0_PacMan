@@ -4,30 +4,48 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Vector2 startingPos;
+    public LayerMask whatStopsMovement;
+    public Transform movePoint;
+    private Vector3 directionTry;
+
+    private float speed = 5f;
     // Start is called before the first frame update
     void Start()
     {
-        startingPos = transform.position;
+        movePoint.parent = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        if(Vector3.Distance(transform.position, movePoint.position)==0f)
+        {
+            directionTry = GetRondomDir();
+            if(Mathf.Abs(directionTry[0])==1)
+            {
+                if(!Physics2D.OverlapCircle(movePoint.position + directionTry, .1f, whatStopsMovement))
+                    movePoint.position = movePoint.position + directionTry;              
+            }
+
+
+            if(Mathf.Abs(directionTry[1])==1)
+            {
+                if(!Physics2D.OverlapCircle(movePoint.position + directionTry, .1f, whatStopsMovement))
+                    movePoint.position = movePoint.position + directionTry;
+            }
+        }
     }
 
-    private Vector2 GetRondomDir(){
-        Vector2[] ListVector =  {new Vector2(-1f,0f),new Vector2(0f,1f),new Vector2(1f,0),new Vector2(0f,-1f)};
+    private Vector3 GetRondomDir(){
+        Vector3[] ListVector =  {new Vector3(-1f,0f,0f),new Vector3(0f,1f,0f),new Vector3(1f,0,0f),new Vector3(0f,-1f,0f)};
         int randomIndex = Random.Range(0,ListVector.Length);
         return ListVector[randomIndex];
     }
 
-    private Vector2 GetRomdomPosition(){
-        return startingPos + this.GetRondomDir() * Random.Range(10f,70f);
-    }
-
-    private void MoveTo(Vector2 targetPos){
-        
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.IsTouchingLayers(10)){
+            Debug.Log("blah");
+        }
     }
 }
