@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
 
 public class Movement : MonoBehaviour
 {
@@ -24,10 +23,6 @@ public class Movement : MonoBehaviour
    void Start()
     {
         movePoint.parent = null;
-    }
-    void FixedUpdate() 
-    {
-        
     }
     // Update is called once per frame
     public void Update()
@@ -71,8 +66,8 @@ public class Movement : MonoBehaviour
         else if(other.CompareTag("enemy")){
             CanDec();
         }
-        
     }
+
     public void CanInc()
     {
         can++;
