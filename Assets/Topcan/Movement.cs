@@ -6,7 +6,8 @@ public class Movement : MonoBehaviour
 {
     //movement icin declare edilen
     float speed = 5f;
-    public Transform movePoint;
+
+    private Vector3 newMovePoint;
     public LayerMask whatStopsMovement;
 
     //cani icin declare edilen attributlar
@@ -22,25 +23,25 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
    void Start()
     {
-        movePoint.parent = null;
+        newMovePoint = transform.position;
     }
     // Update is called once per frame
     public void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
-        if(Vector3.Distance(transform.position, movePoint.position)== 0f)
+        transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
+        if(Vector3.Distance(transform.position, newMovePoint)== 0f)
         {
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal"))==1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f), .1f, whatStopsMovement))
-                    movePoint.position = movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f);              
+                if(!Physics2D.OverlapCircle(newMovePoint + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f), .1f, whatStopsMovement))
+                    newMovePoint = newMovePoint + new Vector3(Input.GetAxisRaw("Horizontal"),0f,0f);              
             }
 
 
             if(Mathf.Abs(Input.GetAxisRaw("Vertical"))==1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f), .1f, whatStopsMovement))
-                    movePoint.position = movePoint.position + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f);
+                if(!Physics2D.OverlapCircle(newMovePoint + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f), .1f, whatStopsMovement))
+                    newMovePoint = newMovePoint + new Vector3(0f,Input.GetAxisRaw("Vertical"),0f);
             }
         }
 
