@@ -48,24 +48,19 @@ public class Movement : MonoBehaviour
 
 
         KalpSpriteSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();//Healthden kalp sayısını alıyo. 
-        if(myfood!=null){
-            bool isActive  = myfood.GetComponent<Food>().getActive();
-        }
         if(can > max_can){
             can = max_can;
         }
         if(KalpSpriteSayisi <= 0){
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("food") && myfood != null){
-            bool isActive  = myfood.GetComponent<Food>().getActive();
-            if(isActive)
-                CanInc();
+            CanInc();
         }
         else if(other.CompareTag("enemy")){
-            CanDec();
+            //CanDec();
         }
     }
 

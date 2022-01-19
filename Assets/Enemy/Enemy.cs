@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private bool move;
     private bool colliderPosSet;
     private Vector3 colliderPos;
+    
+    private Vector3 checker = new Vector3(1f, 0f, 0f);
 
     private float speed = 5f;
     // Start is called before the first frame update
@@ -37,11 +39,10 @@ public class Enemy : MonoBehaviour
         }
         else if(colliderPosSet && Vector3.Distance(transform.position, newMovePoint) == 0f)
         {
-            directionTry = GetRondomDir();
+            directionTry = GetRandomDir();
             while (Physics2D.OverlapCircle(transform.position + directionTry, .001f, whatStopsMovement))
             {
-                directionTry = GetRondomDir();
-                Debug.Log(directionTry);
+                directionTry = GetRandomDir();
             }
 
             colliderPosSet = false;
@@ -52,20 +53,45 @@ public class Enemy : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
         }
     }
+    
+    void FixedUpdate()
+    {
+        Raymethod();
+    }
 
-    private Vector3 GetRondomDir(){
-        Vector3[] ListVector =  {new Vector3(-1f,0f,0f),new Vector3(0f,1f,0f),new Vector3(1f,0,0f),new Vector3(0f,-1f,0f)};
-        int randomIndex = Random.Range(0,ListVector.Length);
-        return  ListVector[randomIndex];
+    private void Raymethod()
+    {
+        LayerMask layers = LayerMask.GetMask("Topcan","StopMovement");
+
+        Ray ray = new Ray(transform.position, checker);
+
+        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, checker,Mathf.Infinity, layers);
+        if (hit.Length > 0 && hit[0].collider != null && hit[0].collider.gameObject.CompareTag("Player"))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(checker) * hit[0].distance, Color.yellow);
+            foreach (var i in hit)
+            {
+                Debug.Log(i.collider.gameObject.tag);
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(checker) * 10, Color.white);
+        }
+    }
+
+    private Vector3 GetRandomDir(){
+        Vector3[] listVector =  {new Vector3(-1f,0f,0f),new Vector3(0f,1f,0f),new Vector3(1f,0,0f),new Vector3(0f,-1f,0f)};
+        int randomIndex = Random.Range(0,listVector.Length);
+        checker = listVector[randomIndex];
+        return  checker;
     }
     
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("trigerlandim");
         if (other.gameObject.tag != "turnpoint") return;
         move = false;
-        Debug.Log("turnPoint");
         colliderPosSet = true;
     }
     
