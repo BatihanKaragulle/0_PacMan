@@ -1,90 +1,105 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
     public LayerMask whatStopsMovement;
-    private Vector3 directionTry = new Vector3 (1f,0f,0f);
+    private Vector3 directionTry;
     private Vector3 newMovePoint;
     private bool move;
     private bool colliderPosSet;
-    private Vector3 colliderPos;
+
+    private bool chase;
+    private Vector3 PlayerPos;
     
-    private Vector3 checker = new Vector3(1f, 0f, 0f);
+    private Vector3 laserDirection = new Vector3(1f, 0f, 0f);
+
+    public Movement Player; 
 
     private float speed = 5f;
     // Start is called before the first frame update
     void Start()
     {
+        directionTry = new Vector3 (1f,0f,0f);
         newMovePoint = transform.position;
         move = true;
         Random.InitState(System.DateTime.Now.Millisecond);
-        //Debug.Log(directionTry);
+        chase = false;    
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (move)
+        if (!chase)
         {
-            transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, newMovePoint) == 0f)
+            if (move)
             {
-                //directionTry = GetRondomDir();
-                if (!Physics2D.OverlapCircle(newMovePoint + directionTry, .1f, whatStopsMovement))
-                    newMovePoint += directionTry;
+                transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, newMovePoint) == 0f)
+                {
+                    if (!Physics2D.OverlapCircle(newMovePoint + directionTry, .1f, whatStopsMovement))
+                        newMovePoint += directionTry;
+                }
             }
-        }
-        else if(colliderPosSet && Vector3.Distance(transform.position, newMovePoint) == 0f)
-        {
-            directionTry = GetRandomDir();
-            while (Physics2D.OverlapCircle(transform.position + directionTry, .001f, whatStopsMovement))
+            else if (colliderPosSet && Vector3.Distance(transform.position, newMovePoint) == 0f)
             {
                 directionTry = GetRandomDir();
+                while (Physics2D.OverlapCircle(transform.position + directionTry, .001f, whatStopsMovement))
+                {
+                    directionTry = GetRandomDir();
+                }
+
+                colliderPosSet = false;
+                move = true;
             }
-
-            colliderPosSet = false;
-            move = true;
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
+            }
         }
-        else
+        else //chasing true
         {
-            transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
+            Vector3 playerPos = transform.position + laserDirection;
+            transform.position = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         }
     }
-    
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
-        Raymethod();
+        if (!Player.immune)
+            PlayerDetection();
+        else
+            chase = false;
     }
 
-    private void Raymethod()
+    private void PlayerDetection()
     {
-        LayerMask layers = LayerMask.GetMask("Topcan","StopMovement");
+        LayerMask importantLayers = LayerMask.GetMask("Topcan", "StopMovement");
 
-        Ray ray = new Ray(transform.position, checker);
-
-        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, checker,Mathf.Infinity, layers);
+        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, laserDirection, Mathf.Infinity, importantLayers);
         if (hit.Length > 0 && hit[0].collider != null && hit[0].collider.gameObject.CompareTag("Player"))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(checker) * hit[0].distance, Color.yellow);
-            foreach (var i in hit)
-            {
-                Debug.Log(i.collider.gameObject.tag);
-            }
+            Debug.DrawRay(transform.position, laserDirection * hit[0].distance, Color.yellow);
+            chase = true;
+            PlayerPos = hit[0].transform.position;
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(checker) * 10, Color.white);
+            Debug.DrawRay(transform.position, transform.TransformDirection(laserDirection) * 10, Color.white);
+            chase = false;
         }
     }
+
 
     private Vector3 GetRandomDir(){
         Vector3[] listVector =  {new Vector3(-1f,0f,0f),new Vector3(0f,1f,0f),new Vector3(1f,0,0f),new Vector3(0f,-1f,0f)};
         int randomIndex = Random.Range(0,listVector.Length);
-        checker = listVector[randomIndex];
-        return  checker;
+        laserDirection = listVector[randomIndex];
+        return  listVector[randomIndex];
     }
     
 

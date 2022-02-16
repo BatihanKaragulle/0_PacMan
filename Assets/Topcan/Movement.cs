@@ -16,18 +16,29 @@ public class Movement : MonoBehaviour
     int max_can = 4;
     int KalpSpriteSayisi;
     public GameObject KalpTutucagi;
-    public int getcanvalue()
-    {
-        return can;
-    }
+
+    public bool immune;
+    private float immuneTimer;
+
+    
     // Start is called before the first frame update
    void Start()
     {
+        immune = false;
         newMovePoint = transform.position;
     }
     // Update is called once per frame
     public void Update()
     {
+        if(immuneTimer > 0)
+        {
+            immuneTimer -= Time.deltaTime;
+        }
+        else
+        {
+            immune = false;
+        }
+        Debug.Log(immuneTimer);
         transform.position = Vector3.MoveTowards(transform.position, newMovePoint, speed * Time.deltaTime);
         if(Vector3.Distance(transform.position, newMovePoint)== 0f)
         {
@@ -55,12 +66,23 @@ public class Movement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public int getcanvalue()
+    {
+        return can;
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("food") && myfood != null){
             CanInc();
         }
         else if(other.CompareTag("enemy")){
-            //CanDec();
+            if (!immune)
+            {
+                CanDec();
+                immuneTimer = 10f;
+                immune = true;
+            }
         }
     }
 
