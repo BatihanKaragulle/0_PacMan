@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -45,8 +46,6 @@ public class Movement : MonoBehaviour
             }
         }
 
-
-
         KalpSpriteSayisi = KalpTutucagi.GetComponent<Health>().getHealthPoints();//Healthden kalp sayısını alıyo. 
         if(myfood!=null){
             bool isActive  = myfood.GetComponent<Food>().getActive();
@@ -54,8 +53,10 @@ public class Movement : MonoBehaviour
         if(can > max_can){
             can = max_can;
         }
-        if(KalpSpriteSayisi <= 0){
-            Destroy(this.gameObject);
+        if(KalpSpriteSayisi <= 0)
+        {
+            SceneManager.LoadScene(0);
+            //Destroy(this.gameObject);
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {
@@ -64,7 +65,8 @@ public class Movement : MonoBehaviour
             if(isActive)
                 CanInc();
         }
-        else if(other.CompareTag("enemy")){
+        else if(other.CompareTag("enemy"))
+        {
             CanDec();
         }
     }
